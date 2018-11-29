@@ -43,8 +43,6 @@ class PageServiceProvider extends ServiceProvider
         if($this->app->runningInConsole()){
             $this->commands($this->commands);
         }
-
-        parent::boot();
     }
 
     /**
