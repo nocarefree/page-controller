@@ -34,10 +34,10 @@ class PageServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
 
-        $this->publishes([__DIR__ . '/../config/admin.php' => config_path('admin.php')], 'config');
+        $this->publishes([__DIR__ . '/../config/admin.php'    => config_path('admin.php')], 'config');
         $this->publishes([__DIR__ . '/../database/migrations' => database_path('migrations')], 'migrations');
-        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/admin')], 'views');
-        $this->publishes([__DIR__ . '/../resources/public' => public_path('vendor/admin')], 'public');
+        $this->publishes([__DIR__ . '/../resources/views'     => resource_path('views/vendor/admin')], 'views');
+        $this->publishes([__DIR__ . '/../resources/public'    => public_path('vendor/admin')], 'public');
 
 
         if($this->app->runningInConsole()){
@@ -64,7 +64,7 @@ class PageServiceProvider extends ServiceProvider
         
         if(file_exists( $admin_route_path )){
             Route::domain( $route_config['domain'] )
-                 ->middleware( ['admin','web'] )
+                 ->middleware( $route_config['middleware'] )
                  ->namespace( $route_config['namespace'] )
                  ->prefix( $route_config['prefix'] )
                  ->group( $admin_route_path );
