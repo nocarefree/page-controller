@@ -3,14 +3,17 @@
 namespace Nocarefree\PageManager;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+
+//page1 page2 $user->can('access', $page);
 
 class PageServiceProvider extends ServiceProvider
 {
     protected $namespace = 'Nocarefree\PageManager\Http\Controllers';
 
     protected $routeMiddleware = [
-        'admin'  => \Nocarefree\PageManager\Http\Middleware\Authenticate::class,
+        'admin'       => \Nocarefree\PageManager\Http\Middleware\Authenticate::class,
         'admin.guest' => \Nocarefree\PageManager\Http\Middleware\RedirectIfAuthenticated::class,
     ];
 
@@ -43,6 +46,8 @@ class PageServiceProvider extends ServiceProvider
         if($this->app->runningInConsole()){
             $this->commands($this->commands);
         }
+        
+        Gate::define('access-route', 'Nocarefree\PageManager\Policies\PagePolicy@update');
     }
 
     /**
